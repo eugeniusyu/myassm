@@ -1,0 +1,17 @@
+@media print {
+    html, body, .container, #content,
+    .table-responsive .table, .dataTable, .box, .row  { width: 100% !important; height: auto !important; border: none !important; padding: 0 !important; margin: 0 !important; }
+    body:before, body:after, .no-print,
+    .header, table td:last-child, table th:last-child, table tfoot, .dataTables_length, .dataTables_filter, .dataTables_info, .dataTables_paginate, .btn, table thead th.sorting::after, table thead th.sorting_asc::after, table thead th.sorting_desc::after, .animated.bounceInDown p, .animated.bounceInDown i {
+        display: none !important;
+    }
+    .wrapper { margin-top: 0 !important; }
+    table thead th.sorting::after, table thead th.sorting_asc::after, table thead th.sorting_desc::after { content: '' !important; display: none !important;}
+    .container { width: auto !important; }
+    h3 { margin-top: 0; }
+    .table th, .table td { display: table-cell; border-top: none !important; border-left: none !important; border-right: none !important; border-bottom: 1px solid #CCC !important; }
+    a:after { display: none; }
+    .print { display: block !important; }
+    table thead th { border-bottom: 1px solid #CCC !important; }
+    table thead { display: table-header-group; border-bottom: 1px solid #CCC !important; }
+}

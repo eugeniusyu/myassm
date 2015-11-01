@@ -1,0 +1,296 @@
+#
+# TABLE STRUCTURE FOR: tec_categories
+#
+
+DROP TABLE IF EXISTS `tec_categories`;
+
+CREATE TABLE `tec_categories` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `code` varchar(20) NOT NULL,
+  `name` varchar(55) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+INSERT INTO `tec_categories` (`id`, `code`, `name`) VALUES ('1', 'G01', 'General');
+INSERT INTO `tec_categories` (`id`, `code`, `name`) VALUES ('2', '1', 'cat1');
+
+
+#
+# TABLE STRUCTURE FOR: tec_check_in
+#
+
+DROP TABLE IF EXISTS `tec_check_in`;
+
+CREATE TABLE `tec_check_in` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `reference` varchar(55) NOT NULL,
+  `date` datetime NOT NULL,
+  `attachment` varchar(55) DEFAULT NULL,
+  `supplier` int(11) DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `updated_by` int(11) DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `note` text,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+#
+# TABLE STRUCTURE FOR: tec_check_in_items
+#
+
+DROP TABLE IF EXISTS `tec_check_in_items`;
+
+CREATE TABLE `tec_check_in_items` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `check_in_id` int(11) NOT NULL,
+  `item_id` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `stock_in_no` (`check_in_id`,`item_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+#
+# TABLE STRUCTURE FOR: tec_check_out
+#
+
+DROP TABLE IF EXISTS `tec_check_out`;
+
+CREATE TABLE `tec_check_out` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `reference` varchar(55) NOT NULL,
+  `date` datetime NOT NULL,
+  `attachment` varchar(55) DEFAULT NULL,
+  `item_id` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `customer` int(11) DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `updated_by` int(11) DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `note` text,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+INSERT INTO `tec_check_out` (`id`, `reference`, `date`, `attachment`, `item_id`, `quantity`, `customer`, `created_by`, `updated_by`, `updated_at`, `note`) VALUES ('1', '849590643780', '2015-10-29 04:34:00', NULL, '0', '0', '0', '1', NULL, NULL, '');
+
+
+#
+# TABLE STRUCTURE FOR: tec_check_out_items
+#
+
+DROP TABLE IF EXISTS `tec_check_out_items`;
+
+CREATE TABLE `tec_check_out_items` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `check_out_id` int(11) NOT NULL,
+  `item_id` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `stock_out_no` (`check_out_id`,`item_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+INSERT INTO `tec_check_out_items` (`id`, `check_out_id`, `item_id`, `quantity`) VALUES ('1', '1', '1', '1');
+
+
+#
+# TABLE STRUCTURE FOR: tec_customers
+#
+
+DROP TABLE IF EXISTS `tec_customers`;
+
+CREATE TABLE `tec_customers` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(55) NOT NULL,
+  `cf1` varchar(255) NOT NULL,
+  `cf2` varchar(255) NOT NULL,
+  `phone` varchar(20) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+INSERT INTO `tec_customers` (`id`, `name`, `cf1`, `cf2`, `phone`, `email`) VALUES ('1', 'Test Customer', '', '', '012345678', 'test@customer.com');
+
+
+#
+# TABLE STRUCTURE FOR: tec_groups
+#
+
+DROP TABLE IF EXISTS `tec_groups`;
+
+CREATE TABLE `tec_groups` (
+  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(20) NOT NULL,
+  `description` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+INSERT INTO `tec_groups` (`id`, `name`, `description`) VALUES ('1', 'admin', 'Administrator');
+INSERT INTO `tec_groups` (`id`, `name`, `description`) VALUES ('2', 'staff', 'Staff member');
+
+
+#
+# TABLE STRUCTURE FOR: tec_items
+#
+
+DROP TABLE IF EXISTS `tec_items`;
+
+CREATE TABLE `tec_items` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` char(255) NOT NULL,
+  `code` varchar(50) NOT NULL,
+  `barcode_symbology` varchar(20) NOT NULL DEFAULT 'code39',
+  `quantity` int(11) NOT NULL,
+  `unit` varchar(255) DEFAULT NULL,
+  `category_id` int(11) DEFAULT NULL,
+  `alert_quantity` int(11) DEFAULT NULL,
+  `image` varchar(255) NOT NULL DEFAULT 'no_image.png',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+INSERT INTO `tec_items` (`id`, `name`, `code`, `barcode_symbology`, `quantity`, `unit`, `category_id`, `alert_quantity`, `image`) VALUES ('1', 'item 1', '1', 'code39', '39', 'bottle', '1', '20', 'no_image.png');
+INSERT INTO `tec_items` (`id`, `name`, `code`, `barcode_symbology`, `quantity`, `unit`, `category_id`, `alert_quantity`, `image`) VALUES ('2', 'item 2', '2', 'code39', '11', 'asdf', '1', '22', 'no_image.png');
+
+
+#
+# TABLE STRUCTURE FOR: tec_login_attempts
+#
+
+DROP TABLE IF EXISTS `tec_login_attempts`;
+
+CREATE TABLE `tec_login_attempts` (
+  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+  `ip_address` varbinary(16) NOT NULL,
+  `login` varchar(100) NOT NULL,
+  `time` int(11) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+#
+# TABLE STRUCTURE FOR: tec_sessions
+#
+
+DROP TABLE IF EXISTS `tec_sessions`;
+
+CREATE TABLE `tec_sessions` (
+  `id` varchar(40) NOT NULL,
+  `ip_address` varchar(45) NOT NULL,
+  `timestamp` int(10) unsigned NOT NULL DEFAULT '0',
+  `data` blob NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `ci_sessions_timestamp` (`timestamp`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('12953875254a3eabaa16e664df02130a921d6439', '::1', '1446056393', '__ci_last_regenerate|i:1446056341;requested_page|s:0:\"\";identity|s:18:\"admin@tecdiary.com\";username|s:5:\"admin\";email|s:18:\"admin@tecdiary.com\";user_id|s:1:\"1\";old_last_login|s:10:\"1439522565\";last_ip|s:9:\"127.0.0.1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('1e0bc8d1155dde09f68adcc4c0dc164d2093a1aa', '::1', '1446054996', '__ci_last_regenerate|i:1446054822;requested_page|s:0:\"\";identity|s:18:\"admin@tecdiary.com\";username|s:5:\"admin\";email|s:18:\"admin@tecdiary.com\";user_id|s:1:\"1\";old_last_login|s:10:\"1439522565\";last_ip|s:9:\"127.0.0.1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('22c28b16b24b5bff518d7fd7a75bdbb2ccfe0003', '::1', '1446052151', '__ci_last_regenerate|i:1446051910;requested_page|s:0:\"\";identity|s:18:\"admin@tecdiary.com\";username|s:5:\"admin\";email|s:18:\"admin@tecdiary.com\";user_id|s:1:\"1\";old_last_login|s:10:\"1439522565\";last_ip|s:9:\"127.0.0.1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('43e01cf4eb1e11c291f058b4affd983e646f097c', '::1', '1446053622', '__ci_last_regenerate|i:1446053322;requested_page|s:0:\"\";identity|s:18:\"admin@tecdiary.com\";username|s:5:\"admin\";email|s:18:\"admin@tecdiary.com\";user_id|s:1:\"1\";old_last_login|s:10:\"1439522565\";last_ip|s:9:\"127.0.0.1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('47b2358052d4df4adf67e3818b6460de4fbf7f76', '::1', '1446052673', '__ci_last_regenerate|i:1446052569;requested_page|s:0:\"\";identity|s:18:\"admin@tecdiary.com\";username|s:5:\"admin\";email|s:18:\"admin@tecdiary.com\";user_id|s:1:\"1\";old_last_login|s:10:\"1439522565\";last_ip|s:9:\"127.0.0.1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('4e52281c88f4459ca3a994b7eec903fad923c93c', '::1', '1446051660', '__ci_last_regenerate|i:1446051583;requested_page|s:0:\"\";identity|s:18:\"admin@tecdiary.com\";username|s:5:\"admin\";email|s:18:\"admin@tecdiary.com\";user_id|s:1:\"1\";old_last_login|s:10:\"1439522565\";last_ip|s:9:\"127.0.0.1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('ad8ddf3f44d291dfeaf3448cc641dd2303ac7756', '::1', '1446055715', '__ci_last_regenerate|i:1446055475;requested_page|s:0:\"\";identity|s:18:\"admin@tecdiary.com\";username|s:5:\"admin\";email|s:18:\"admin@tecdiary.com\";user_id|s:1:\"1\";old_last_login|s:10:\"1439522565\";last_ip|s:9:\"127.0.0.1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('b3cb101322767132c39bb52211f2f60e43fa72c8', '::1', '1446053300', '__ci_last_regenerate|i:1446053015;requested_page|s:0:\"\";identity|s:18:\"admin@tecdiary.com\";username|s:5:\"admin\";email|s:18:\"admin@tecdiary.com\";user_id|s:1:\"1\";old_last_login|s:10:\"1439522565\";last_ip|s:9:\"127.0.0.1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('b8c86bb0cfb66e990238c8b613a805e5fe21eef7', '::1', '1446052557', '__ci_last_regenerate|i:1446052244;requested_page|s:0:\"\";identity|s:18:\"admin@tecdiary.com\";username|s:5:\"admin\";email|s:18:\"admin@tecdiary.com\";user_id|s:1:\"1\";old_last_login|s:10:\"1439522565\";last_ip|s:9:\"127.0.0.1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('d7ebca5ee87a861705a9dfe40a02bf59188bf42f', '::1', '1446055973', '__ci_last_regenerate|i:1446055815;requested_page|s:0:\"\";identity|s:18:\"admin@tecdiary.com\";username|s:5:\"admin\";email|s:18:\"admin@tecdiary.com\";user_id|s:1:\"1\";old_last_login|s:10:\"1439522565\";last_ip|s:9:\"127.0.0.1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('e2b145d709a241f58c153cc30eb0850a69c7224e', '::1', '1446053847', '__ci_last_regenerate|i:1446053635;requested_page|s:0:\"\";identity|s:18:\"admin@tecdiary.com\";username|s:5:\"admin\";email|s:18:\"admin@tecdiary.com\";user_id|s:1:\"1\";old_last_login|s:10:\"1439522565\";last_ip|s:9:\"127.0.0.1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";');
+
+
+#
+# TABLE STRUCTURE FOR: tec_settings
+#
+
+DROP TABLE IF EXISTS `tec_settings`;
+
+CREATE TABLE `tec_settings` (
+  `setting_id` int(1) NOT NULL,
+  `logo` varchar(255) NOT NULL,
+  `site_name` varchar(55) NOT NULL,
+  `rows_per_page` int(2) NOT NULL,
+  `dateformat` varchar(20) DEFAULT NULL,
+  `timeformat` varchar(20) DEFAULT NULL,
+  `language` varchar(20) NOT NULL,
+  `version` varchar(10) NOT NULL DEFAULT '1.0',
+  `theme` varchar(20) NOT NULL,
+  `timezone` varchar(255) NOT NULL DEFAULT '0',
+  `default_email` varchar(100) DEFAULT NULL,
+  `mmode` tinyint(1) NOT NULL,
+  `captcha` tinyint(1) NOT NULL DEFAULT '1',
+  `purchase_code` varchar(100) DEFAULT NULL,
+  `envato_username` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`setting_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `tec_settings` (`setting_id`, `logo`, `site_name`, `rows_per_page`, `dateformat`, `timeformat`, `language`, `version`, `theme`, `timezone`, `default_email`, `mmode`, `captcha`, `purchase_code`, `envato_username`) VALUES ('1', 'logo.png', 'Stock Manager', '10', 'jS F Y', 'h:i A', 'english', '2.0.2', 'default', 'Asia/Kuala_Lumpur', 'noreply@ssm.tecdiary.my', '0', '0', NULL, NULL);
+
+
+#
+# TABLE STRUCTURE FOR: tec_suppliers
+#
+
+DROP TABLE IF EXISTS `tec_suppliers`;
+
+CREATE TABLE `tec_suppliers` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(55) NOT NULL,
+  `cf1` varchar(255) NOT NULL,
+  `cf2` varchar(255) NOT NULL,
+  `phone` varchar(20) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+INSERT INTO `tec_suppliers` (`id`, `name`, `cf1`, `cf2`, `phone`, `email`) VALUES ('1', 'Test Supplier', '', '', '012345678', 'test@supplier.com');
+
+
+#
+# TABLE STRUCTURE FOR: tec_user_logins
+#
+
+DROP TABLE IF EXISTS `tec_user_logins`;
+
+CREATE TABLE `tec_user_logins` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `company_id` int(11) DEFAULT NULL,
+  `ip_address` varbinary(16) NOT NULL,
+  `login` varchar(100) NOT NULL,
+  `time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+INSERT INTO `tec_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES ('1', '1', NULL, '::1', 'admin@tecdiary.com', '2015-10-29 04:00:55');
+
+
+#
+# TABLE STRUCTURE FOR: tec_users
+#
+
+DROP TABLE IF EXISTS `tec_users`;
+
+CREATE TABLE `tec_users` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `last_ip_address` varbinary(45) DEFAULT NULL,
+  `ip_address` varbinary(45) NOT NULL,
+  `username` varchar(100) NOT NULL,
+  `password` varchar(40) NOT NULL,
+  `salt` varchar(40) DEFAULT NULL,
+  `email` varchar(100) NOT NULL,
+  `activation_code` varchar(40) DEFAULT NULL,
+  `forgotten_password_code` varchar(40) DEFAULT NULL,
+  `forgotten_password_time` int(11) unsigned DEFAULT NULL,
+  `remember_code` varchar(40) DEFAULT NULL,
+  `created_on` int(11) unsigned NOT NULL,
+  `last_login` int(11) unsigned DEFAULT NULL,
+  `active` tinyint(1) unsigned DEFAULT NULL,
+  `first_name` varchar(50) DEFAULT NULL,
+  `last_name` varchar(50) DEFAULT NULL,
+  `company` varchar(100) DEFAULT NULL,
+  `phone` varchar(20) DEFAULT NULL,
+  `avatar` varchar(55) DEFAULT NULL,
+  `gender` varchar(20) DEFAULT NULL,
+  `group_id` int(10) unsigned NOT NULL,
+  `hash` varchar(200) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `group_id` (`group_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+INSERT INTO `tec_users` (`id`, `last_ip_address`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `forgotten_password_time`, `remember_code`, `created_on`, `last_login`, `active`, `first_name`, `last_name`, `company`, `phone`, `avatar`, `gender`, `group_id`, `hash`) VALUES ('1', '::1', '\0\0', 'admin', '2a7c8e0896640da11cef8c5767e56efb359f947e', NULL, 'admin@tecdiary.com', NULL, '6098efc68f769bb79f710ec1c7f4f217f4737794', '1439445583', NULL, '1351661704', '1446051655', '1', 'Admin', 'Admin', 'Simple Stock Manager', '012345678', NULL, 'male', '1', NULL);
+
+
